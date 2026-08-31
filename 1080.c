@@ -12,20 +12,20 @@ Uso de IA   : Não foi utilizado
 #include <stdio.h>
  
 int main() {
- 
+    //Declaração de variáveis
     int Maior = 0;
     int pMaior = 0;
     
     for (int i = 0; i < 100; i++){
         int temp = 0;
         scanf("%d", &temp);
-        if(temp > Maior){
+        if(temp > Maior){ //Se temp for maior, substituir Maior e pMaior (posição) 
             Maior = temp;
             pMaior = i;
         }
     }
     printf("%d\n", Maior);
-    printf("%d\n", pMaior + 1);
+    printf("%d\n", pMaior + 1); //+1 pois queremos a posição levando em conta que ela começa no 1
  
     return 0;
 }
