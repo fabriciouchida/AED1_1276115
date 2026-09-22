@@ -2,7 +2,7 @@
 Disciplina  : Algortimo e Estrutura de Dados 2026S1
 Nome        : <<<Fabrício Ribeiro Uchida>>>
 Linguagem   : C
-Problema    : https://judge.beecrowd.com/pt/problems/view/<<1064>>
+Problema    : https://judge.beecrowd.com/pt/problems/view/<<1068>>
 Data        : 13/09/2026
 Objetivo    : Criar uma pilha e identificar se os parenteses se complementam
 Dificuldade : Utilizar lógicas de string junto com ponteiros
