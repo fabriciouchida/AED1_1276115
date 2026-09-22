@@ -1,3 +1,13 @@
+/* --------------------------------------------------------------------------
+Disciplina  : Algortimo e Estrutura de Dados 2026S1
+Nome        : Fabrício Ribeiro Uchida
+Linguagem   : C
+Problema    : https://judge.beecrowd.com/pt/problems/view/1383
+Data        : 31/08/2026
+Objetivo    : Ler k sudokus e identificar se cada uma é válida, usando alocação dinâmica
+Dificuldade : 3° verificação, se havia números repetidos em cada bloco 3x3, além de aplicar a lógica de ser uma quantidade dinâmica
+Uso de IA   : Usada para lógica da 3° verificação
+-------------------------------------------------------------------------- */
 #include <stdio.h>
 #include <stdlib.h>
 
