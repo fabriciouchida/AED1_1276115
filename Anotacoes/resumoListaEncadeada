@@ -1,0 +1,558 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+
+/*
+    ESTRUTURA DO NO
+
+    Cada no possui:
+    - info: o valor armazenado.
+    - prox: o endereco do proximo no.
+
+    O tipo No pode ser usado para declarar nos
+    e ponteiros para nos.
+*/
+typedef struct No {
+    int info;
+    struct No *prox;
+} No;
+
+
+/*
+    1. CRIAR LISTA
+
+    Cria a celula cabeca, que e um no especial.
+    Ela nao conta como elemento da lista.
+
+    Quando a lista esta vazia:
+    cabeca -> NULL
+*/
+No *criarLista(void) {
+
+    // Reserva memoria para a celula cabeca.
+    // sizeof(No) informa o tamanho de um no.
+    // (No *) converte explicitamente o retorno.
+    No *cabeca = (No *) malloc(sizeof(No));
+
+    // malloc retorna NULL se nao conseguir alocar.
+    if (cabeca == NULL) {
+        printf("Erro de alocacao de memoria!\n");
+        exit(1);
+    }
+
+    // A cabeca nao possui um proximo elemento.
+    cabeca->prox = NULL;
+
+    // Retorna o endereco da cabeca criada.
+    return cabeca;
+}
+
+
+/*
+    2. VERIFICAR SE A LISTA ESTA VAZIA
+
+    Se cabeca->prox for NULL, nao existem
+    elementos depois da cabeca.
+
+    Retorna 1 se estiver vazia e 0 caso contrario.
+*/
+int listaVazia(No *cabeca) {
+    return cabeca->prox == NULL;
+}
+
+
+/*
+    3. INSERIR NO INICIO
+
+    Exemplo:
+    Antes: cabeca -> 10 -> 20 -> NULL
+    Inserir 5
+    Depois: cabeca -> 5 -> 10 -> 20 -> NULL
+*/
+void inserirInicio(No *cabeca, int valor) {
+
+    // Aloca memoria para o novo elemento.
+    No *novo = (No *) malloc(sizeof(No));
+
+    if (novo == NULL) {
+        printf("Erro de alocacao de memoria!\n");
+        return;
+    }
+
+    // Guarda o valor recebido no novo no.
+    novo->info = valor;
+
+    // Primeiro, o novo no aponta para o antigo
+    // primeiro elemento da lista.
+    novo->prox = cabeca->prox;
+
+    // Depois, a cabeca passa a apontar para o novo.
+    cabeca->prox = novo;
+}
+
+
+/*
+    4. INSERIR NO FINAL
+
+    Percorre a lista ate encontrar o ultimo no.
+    O ultimo no e aquele cujo campo prox e NULL.
+*/
+void inserirFinal(No *cabeca, int valor) {
+
+    No *novo = (No *) malloc(sizeof(No));
+
+    if (novo == NULL) {
+        printf("Erro de alocacao de memoria!\n");
+        return;
+    }
+
+    novo->info = valor;
+
+    // O novo no sera o ultimo.
+    novo->prox = NULL;
+
+    // Comeca na cabeca para funcionar tambem
+    // quando a lista ainda estiver vazia.
+    No *p = cabeca;
+
+    // Enquanto existir um proximo no, avanca.
+    while (p->prox != NULL) {
+        p = p->prox;
+    }
+
+    // p agora aponta para o ultimo no,
+    // ou para a cabeca se a lista estiver vazia.
+    // Liga o ultimo no ao novo elemento.
+    p->prox = novo;
+}
+
+
+/*
+    5. INSERIR EM UMA POSICAO
+
+    As posicoes dos elementos comecam em 1.
+    A posicao 1 corresponde ao primeiro elemento.
+    A posicao tamanho + 1 permite inserir no final.
+*/
+void inserirPosicao(No *cabeca, int valor, int posicao) {
+
+    if (posicao < 1) {
+        printf("Posicao invalida!\n");
+        return;
+    }
+
+    // p comeca na cabeca porque precisamos
+    // encontrar o no ANTERIOR a posicao desejada.
+    No *p = cabeca;
+    int i = 1;
+
+    // Avanca enquanto ainda nao chegou ao
+    // no anterior a posicao de insercao.
+    while (i < posicao && p->prox != NULL) {
+        p = p->prox;
+        i++;
+    }
+
+    // Se i ainda for menor que posicao,
+    // a posicao solicitada nao e valida.
+    if (i < posicao) {
+        printf("Posicao invalida!\n");
+        return;
+    }
+
+    No *novo = (No *) malloc(sizeof(No));
+
+    if (novo == NULL) {
+        printf("Erro de alocacao de memoria!\n");
+        return;
+    }
+
+    novo->info = valor;
+
+    // O novo no recebe como proximo o no que
+    // anteriormente vinha depois de p.
+    novo->prox = p->prox;
+
+    // p passa a apontar para o novo no.
+    // A ordem das duas atribuicoes e importante.
+    p->prox = novo;
+}
+
+
+/*
+    6. BUSCAR UM VALOR
+
+    Percorre a lista procurando o valor informado.
+
+    Retorna:
+    - O endereco do no, se encontrar.
+    - NULL, se nao encontrar.
+*/
+No *buscar(No *cabeca, int valor) {
+
+    // Comeca no primeiro elemento real,
+    // ignorando a celula cabeca.
+    No *p = cabeca->prox;
+
+    while (p != NULL) {
+
+        // Compara o valor atual com o procurado.
+        if (p->info == valor) {
+            return p;
+        }
+
+        // Avanca para o proximo no.
+        p = p->prox;
+    }
+
+    // Chegou ao final sem encontrar o valor.
+    return NULL;
+}
+
+
+/*
+    7. IMPRIMIR A LISTA
+
+    Percorre os nos e mostra os valores.
+*/
+void imprimirLista(No *cabeca) {
+
+    No *p = cabeca->prox;
+
+    if (p == NULL) {
+        printf("Lista vazia!\n");
+        return;
+    }
+
+    printf("Lista: ");
+
+    while (p != NULL) {
+        printf("%d -> ", p->info);
+        p = p->prox;
+    }
+
+    printf("NULL\n");
+}
+
+
+/*
+    8. CONTAR ELEMENTOS
+
+    A cabeca nao entra na contagem.
+*/
+int contarElementos(No *cabeca) {
+
+    int quantidade = 0;
+    No *p = cabeca->prox;
+
+    while (p != NULL) {
+        quantidade++;
+        p = p->prox;
+    }
+
+    return quantidade;
+}
+
+
+/*
+    9. REMOVER PELO VALOR
+
+    Remove somente a primeira ocorrencia
+    do valor procurado.
+
+    Retorna 1 se removeu e 0 se nao encontrou.
+*/
+int removerValor(No *cabeca, int valor) {
+
+    // anterior comeca na cabeca porque ela
+    // tambem pode ser o anterior ao primeiro no.
+    No *anterior = cabeca;
+    No *atual = cabeca->prox;
+
+    // Procura o valor mantendo os dois ponteiros.
+    while (atual != NULL && atual->info != valor) {
+        anterior = atual;
+        atual = atual->prox;
+    }
+
+    // Se atual for NULL, o valor nao existe.
+    if (atual == NULL) {
+        return 0;
+    }
+
+    // O anterior passa a apontar para o sucessor
+    // do no que sera removido.
+    anterior->prox = atual->prox;
+
+    // Libera a memoria do no removido.
+    free(atual);
+
+    return 1;
+}
+
+
+/*
+    10. REMOVER POR POSICAO
+
+    As posicoes comecam em 1.
+*/
+int removerPosicao(No *cabeca, int posicao) {
+
+    if (posicao < 1) {
+        return 0;
+    }
+
+    No *anterior = cabeca;
+    int i = 1;
+
+    // Encontra o no anterior ao que sera removido.
+    while (i < posicao && anterior->prox != NULL) {
+        anterior = anterior->prox;
+        i++;
+    }
+
+    // O no a remover fica depois de anterior.
+    No *atual = anterior->prox;
+
+    // Se nao existir esse no, a posicao e invalida.
+    if (atual == NULL) {
+        return 0;
+    }
+
+    // Retira o no da cadeia.
+    anterior->prox = atual->prox;
+
+    // Devolve a memoria ao sistema.
+    free(atual);
+
+    return 1;
+}
+
+
+/*
+    11. INVERTER A LISTA
+
+    Utiliza tres ponteiros:
+    anterior, atual e seguinte.
+
+    A cada repeticao, inverte uma ligacao.
+    Nao cria nem remove nos.
+*/
+void inverterLista(No *cabeca) {
+
+    No *anterior = NULL;
+    No *atual = cabeca->prox;
+    No *seguinte;
+
+    while (atual != NULL) {
+
+        // Guarda o proximo antes de alterar atual->prox.
+        seguinte = atual->prox;
+
+        // Inverte a ligacao do no atual.
+        atual->prox = anterior;
+
+        // Avanca os ponteiros.
+        anterior = atual;
+        atual = seguinte;
+    }
+
+    // anterior aponta para o antigo ultimo no,
+    // que agora e o primeiro elemento.
+    cabeca->prox = anterior;
+}
+
+
+/*
+    12. ORDENAR EM ORDEM CRESCENTE
+
+    Compara os valores e troca-os quando
+    estao na ordem incorreta.
+
+    Este metodo tem complexidade O(n^2).
+*/
+void ordenarLista(No *cabeca) {
+
+    No *p;
+    No *q;
+    int aux;
+
+    for (p = cabeca->prox; p != NULL; p = p->prox) {
+
+        for (q = p->prox; q != NULL; q = q->prox) {
+
+            if (p->info > q->info) {
+
+                // Troca os valores, nao os ponteiros.
+                aux = p->info;
+                p->info = q->info;
+                q->info = aux;
+            }
+        }
+    }
+}
+
+
+/*
+    13. LIBERAR TODA A LISTA
+
+    Libera os nos de dados e a propria cabeca.
+    O endereco do proximo no precisa ser salvo
+    antes de liberar a memoria do no atual.
+*/
+void liberarLista(No *cabeca) {
+
+    No *atual = cabeca;
+    No *seguinte;
+
+    while (atual != NULL) {
+
+        // Guarda o proximo endereco antes do free.
+        seguinte = atual->prox;
+
+        // Libera o no atual.
+        free(atual);
+
+        // Continua usando o endereco salvo.
+        atual = seguinte;
+    }
+}
+
+
+/*
+    14. FUNCAO PRINCIPAL
+
+    Exibe um menu para testar as operacoes.
+*/
+int main(void) {
+
+    No *lista = criarLista();
+
+    int opcao;
+    int valor;
+    int posicao;
+
+    do {
+        printf("\n===== LISTA COM CABECA =====\n");
+        printf("1 - Inserir no inicio\n");
+        printf("2 - Inserir no final\n");
+        printf("3 - Inserir em uma posicao\n");
+        printf("4 - Buscar valor\n");
+        printf("5 - Remover pelo valor\n");
+        printf("6 - Remover por posicao\n");
+        printf("7 - Imprimir lista\n");
+        printf("8 - Contar elementos\n");
+        printf("9 - Verificar se esta vazia\n");
+        printf("10 - Inverter lista\n");
+        printf("11 - Ordenar lista\n");
+        printf("0 - Sair\n");
+        printf("Opcao: ");
+
+        if (scanf("%d", &opcao) != 1) {
+            liberarLista(lista);
+            return 0;
+        }
+
+        switch (opcao) {
+
+            case 1:
+                printf("Valor: ");
+                if (scanf("%d", &valor) == 1) {
+                    inserirInicio(lista, valor);
+                }
+                break;
+
+            case 2:
+                printf("Valor: ");
+                if (scanf("%d", &valor) == 1) {
+                    inserirFinal(lista, valor);
+                }
+                break;
+
+            case 3:
+                printf("Valor e posicao: ");
+                if (scanf("%d %d", &valor, &posicao) == 2) {
+                    inserirPosicao(lista, valor, posicao);
+                }
+                break;
+
+            case 4:
+                printf("Valor procurado: ");
+                if (scanf("%d", &valor) != 1) {
+                    break;
+                }
+
+                if (buscar(lista, valor) != NULL) {
+                    printf("Elemento encontrado!\n");
+                } else {
+                    printf("Elemento nao encontrado!\n");
+                }
+                break;
+
+            case 5:
+                printf("Valor a remover: ");
+                if (scanf("%d", &valor) != 1) {
+                    break;
+                }
+
+                if (removerValor(lista, valor)) {
+                    printf("Elemento removido!\n");
+                } else {
+                    printf("Elemento nao encontrado!\n");
+                }
+                break;
+
+            case 6:
+                printf("Posicao a remover: ");
+                if (scanf("%d", &posicao) != 1) {
+                    break;
+                }
+
+                if (removerPosicao(lista, posicao)) {
+                    printf("Elemento removido!\n");
+                } else {
+                    printf("Posicao invalida!\n");
+                }
+                break;
+
+            case 7:
+                imprimirLista(lista);
+                break;
+
+            case 8:
+                printf("Quantidade: %d\n",
+                       contarElementos(lista));
+                break;
+
+            case 9:
+                if (listaVazia(lista)) {
+                    printf("Lista vazia!\n");
+                } else {
+                    printf("Lista nao vazia!\n");
+                }
+                break;
+
+            case 10:
+                inverterLista(lista);
+                printf("Lista invertida!\n");
+                break;
+
+            case 11:
+                ordenarLista(lista);
+                printf("Lista ordenada!\n");
+                break;
+
+            case 0:
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+        }
+
+    } while (opcao != 0);
+
+    // Libera todos os nos antes de encerrar.
+    liberarLista(lista);
+
+    return 0;
+}
