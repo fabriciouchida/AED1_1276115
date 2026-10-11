@@ -1,3 +1,13 @@
+/* --------------------------------------------------------------------------
+Disciplina  : Algortimo e Estrutura de Dados 2026S1
+Nome        : <<<Fabrício Ribeiro Uchida>>>
+Linguagem   : C
+Problema    : https://judge.beecrowd.com/pt/problems/view/<<1062>>
+Data        : 11/10/2026
+Objetivo    : Criar uma pilha e identificar se os trens podem passar na ordem desejada
+Dificuldade : Interpretação do problema. Depois de entender o que ele pede, fica fácil
+Uso de IA   : Commit do Github
+-------------------------------------------------------------------------- */
 #include <stdio.h>
 
 int main() {
