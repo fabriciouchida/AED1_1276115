@@ -1,3 +1,14 @@
+/* --------------------------------------------------------------------------
+Disciplina  : Algortimo e Estrutura de Dados 2026S1
+Nome        : <<<Fabrício Ribeiro Uchida>>>
+Linguagem   : C
+Problema    : https://judge.beecrowd.com/pt/problems/view/1180
+Data        : 19/08/2026
+Objetivo    : Encontrar o menor valor em um vetor e sua posição
+Dificuldade : Nenhuma
+Uso de IA   : Não foi utilizado
+-------------------------------------------------------------------------- */
+
 #include <stdio.h>
  
 int main() {
