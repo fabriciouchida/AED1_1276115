@@ -40,6 +40,10 @@ void pop(No **cabeca, No **fim){
     }
 }
 
+int listaVazia(No *cabeca){
+    return cabeca->prox == NULL;
+}
+
 int main(){
     No *cabeca = (No *) malloc (sizeof(No));
     if (cabeca == NULL){
