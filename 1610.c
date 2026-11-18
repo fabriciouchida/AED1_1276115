@@ -1,4 +1,13 @@
-
+/* --------------------------------------------------------------------------
+Disciplina  : Algortimo e Estrutura de Dados 2026S1
+Nome        : <<<Fabrício Ribeiro Uchida>>>
+Linguagem   : C
+Problema    : https://judge.beecrowd.com/pt/problems/view/1610
+Data        : 18/11/2026
+Objetivo    : Verifica se tem um loop nas dependencias do documento, um dependendendo de si mesmo
+Dificuldade : Visualizar o problema, visualizar como seria em grafo, pensar em que estratégia usar para resolver o problema e aplicar o DFS.
+Uso de IA   : Usada para corrigir problema "Memory limit exceeded". Tinha feito uma matriz de adjacencia e que ficava muito grande, e ultrapassava o limite de memória. Usei uma lista de adjacencia no lugar
+-------------------------------------------------------------------------- */
 #include <stdio.h>
 #include <stdlib.h>
 
