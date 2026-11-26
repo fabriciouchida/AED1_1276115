@@ -1,4 +1,13 @@
-
+/* --------------------------------------------------------------------------
+Disciplina  : Algortimo e Estrutura de Dados 2026S1
+Nome        : <<<Fabrício Ribeiro Uchida>>>
+Linguagem   : C
+Problema    : https://judge.beecrowd.com/pt/problems/view/<<1123>>
+Data        : 11/10/2026
+Objetivo    : Aplicar Djikiastra para resolver um problema de trânsito
+Dificuldade : Além da aplicação do Djikiastra, ele não poder sair da cidade da rota de servico
+Uso de IA   : Usada para INT_MAX, biblioteca limits. Usada para continue. Usada para lógica do break e continue
+-------------------------------------------------------------------------- */
 #include <stdio.h>
 #include <limits.h>
 
